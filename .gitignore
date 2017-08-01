@@ -1,0 +1,14 @@
+*.pem
+*.zip
+*.out
+*.log
+*.gz
+*.DS_Store
+/app/scripts/envConfig.js
+/node
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/.directory
+/bower_components
