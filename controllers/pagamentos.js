@@ -38,7 +38,7 @@ module.exports = (app) => {
 
         pagamentoDAO.atualiza(pagamento, (erro) => {
             if (erro) {
-                res.status(500).send(erro);
+                res.status(204).send(erro);
                 return;
             }
             console.log('pagamento confirmado');
@@ -80,11 +80,52 @@ module.exports = (app) => {
                 res.status(500).send(erro);
             } else {
                 console.log('pagamento salvo');
-                res.location('/pagamentos/pagamento/' + resultado.insertId);
-                res.status(201).json(pagamento);
+
+                if (pagamento.forma_de_pagamento == "cartao") {
+                    let cartao = req.body['cartao'];
+
+                    // clienteCartoes.autoriza(cartao);
+
+                    let clienteCartoes = new app.servicos.clienteCartoes();
+
+                    clienteCartoes.autoriza(cartao, (exception, request, response, retorno) => {
+                        if (exception) {
+                            console.log(exception);
+                            res.status(400).send(exception);
+                            return;
+                        }
+                        console.log(retorno);
+                        res.status(201).json(retorno);
+                        return;
+                    });
+
+                    res.status(201).json(cartao);
+
+                } else {
+                    res.location('/pagamentos/pagamento/' + pagamento.id);
+
+                    let response = {
+                        dados_do_pagamento: pagamento,
+                        links: [
+                            {
+                                href: 'http://localhost:3000/pagamentos/pagamento' + pagamento.id,
+                                rel: "confimar",
+                                method: "PUT"
+                            },
+                            {
+                                href: 'http://localhost:3000/pagamentos/pagamento' + pagamento.id,
+                                rel: "cancelar",
+                                method: "DELETE"
+                            }
+                        ]
+                    };
+
+                    res.status(201).json(pagamento);
+                }
             }
         });
 
         // res.send(pagamento);
     });
+
 }
