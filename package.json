@@ -1,32 +1,26 @@
 {
   "name": "payfast",
   "version": "1.0.0",
-  "description": "",
+  "description": "gateway de pagamentos utilizando recursos http.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/willianmiranda/payfast.git"
-  },
-  "author": "",
+  "keywords": [
+    "api",
+    "gateway",
+    "javascript"
+  ],
+  "author": "juliocvidal",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/willianmiranda/payfast/issues"
-  },
-  "homepage": "https://github.com/willianmiranda/payfast#readme",
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "consign": "^0.1.6",
-    "express": "^4.15.3",
-    "express-validator": "^3.2.1",
+    "body-parser": "^1.15.2",
+    "consign": "^0.1.2",
+    "express": "^4.14.0",
+    "express-validator": "^2.20.8",
     "memcached": "^2.2.2",
-    "mysql": "^2.14.1",
-    "restify": "^5.0.1",
-    "soap": "^0.19.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.12.1"
+    "mysql": "^2.11.1",
+    "restify": "^4.1.1",
+    "soap": "^0.16.0"
   }
 }
