@@ -79,6 +79,7 @@ module.exports = function(app){
 
   });
 
+  // curl http://localhost:3000/pagamentos/pagamento -X POST -v -H "Content-type: application/json" -d '{ "forma_de_pagamento": "payfast", "valor": "10.87", "moeda": "BRL", "descricao": "descrição do pagamento" }'
   app.post('/pagamentos/pagamento', function(req, res){
 
     req.assert("pagamento.forma_de_pagamento",

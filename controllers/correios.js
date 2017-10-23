@@ -2,7 +2,7 @@ module.exports = function(app){
 
   app.post('/correios/calculo-prazo', function(req, res){
     var dadosDaEntrega = req.body;
-
+    return;
     var correiosSOAPClient = new app.servicos.correiosSOAPClient();
     correiosSOAPClient.calculaPrazo(dadosDaEntrega,
               function(erro, resultado){
