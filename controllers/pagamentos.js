@@ -79,7 +79,7 @@ module.exports = function(app){
 
   });
 
-  // curl http://localhost:3000/pagamentos/pagamento -X POST -v -H "Content-type: application/json" -d '{ "forma_de_pagamento": "payfast", "valor": "10.87", "moeda": "BRL", "descricao": "descrição do pagamento" }'
+  // curl http://localhost:3000/pagamentos/pagamento -X POST -v -H "Content-type: application/json" -d '{"pagamento":{ "forma_de_pagamento": "payfast", "valor": "10.87", "moeda": "BRL", "descricao": "descrição do pagamento" }}'
   app.post('/pagamentos/pagamento', function(req, res){
 
     req.assert("pagamento.forma_de_pagamento",
@@ -100,9 +100,14 @@ module.exports = function(app){
     console.log('processando uma requisicao de um novo pagamento');
 
     pagamento.status = 'CRIADO';
-    pagamento.data = new Date;
+    pagamento.data = new Date();
+    //connection mysql
+    // var connection = app.persistencia.connectionFactory();
+    //usando mysql
+    // var pagamentoDao = new app.persistencia.PagamentoDao(connection);
 
-    var connection = app.persistencia.connectionFactory();
+    var connection = app.persistencia.mongoConnection;
+
     var pagamentoDao = new app.persistencia.PagamentoDao(connection);
 
     pagamentoDao.salva(pagamento, function(erro, resultado){
