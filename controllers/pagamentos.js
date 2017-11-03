@@ -1,3 +1,5 @@
+var logger = require('../servicos/logger.js');
+
 module.exports = function(app){
   app.get('/pagamentos', function(req, res){
     console.log('Recebida requisicao de teste na porta 3000.')
@@ -7,6 +9,7 @@ module.exports = function(app){
   app.get('/pagamentos/pagamento/:id', function(req, res){
     var id = req.params.id;
     console.log('consultando pagamento: ' + id);
+    logger.inf('consultando pagamento: ' + id);
 
     var memcachedClient = app.servicos.memcachedClient();
 
@@ -115,7 +118,7 @@ module.exports = function(app){
         console.log('Erro ao inserir no banco:' + erro);
         res.status(500).send(erro);
       } else {
-      pagamento.id = resultado.insertId;
+      pagamento.id = (resultado.insertId) ? resultado.insertId : resultado.insertedIds[0].toString();
       console.log('pagamento criado');
 
       var memcachedClient = app.servicos.memcachedClient();
